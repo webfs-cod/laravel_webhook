@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('input', 'WebhookController@input')->name('webhook-input');
+Route::get('input', 'WebhookController@input/{id}')->name('webhook-input');

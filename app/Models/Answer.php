@@ -15,23 +15,25 @@ class Answer extends Model
         return $this->belongsTo('App\Models\Question');
     }
 
-    public function save_by_request($request)
+    public function saveByRequest($request)
     {
-        if ($request->answer === null OR $request->question_id === null) {
+        if ($request->answer === null || $request->questionId === null) {
             throw new WebhookException('The request is incorrect');
         }
         $this->answer = $request->answer;
-        $this->question_id = $request->question_id;
+        $this->questionId = $request->questionId;
         $this->save();
     }
 
-    public static function get_next_question_id(Answer $answer = null): int
+    public static function getNextQuestionId(Answer $answer = null): int
     {
-        $next_question_id = null;
+        $nextQuestionId = null;
         if ($answer !== null) {
-            $next_question_id = $answer->question->next_question_id;
+            $nextQuestionId = $answer->question->nextQuestionId;
         } else {
-            $next_question_id = 1;
+            $nextQuestionId = 1;
         }
+
+        return $nextQuestionId;
     }
 }

@@ -18,7 +18,7 @@ class ServerResponse extends Entity
     /**
      * ServerResponse constructor.
      *
-     * @param array  $data
+     * @param array $data
      * @param string $username
      */
     public function __construct(array $data, $username)
@@ -27,7 +27,7 @@ class ServerResponse extends Entity
         unset($data['raw_data']);
         $data['raw_data'] = $data;
 
-        $is_ok  = isset($data['ok']) ? (bool) $data['ok'] : false;
+        $is_ok = isset($data['ok']) ? (bool)$data['ok'] : false;
         $result = isset($data['result']) ? $data['result'] : null;
 
         if ($is_ok && is_array($result)) {
@@ -62,7 +62,7 @@ class ServerResponse extends Entity
      */
     public function isOk()
     {
-        return (bool) $this->getOk();
+        return (bool)$this->getOk();
     }
 
     /**
@@ -77,11 +77,9 @@ class ServerResponse extends Entity
     public function printError($return = false)
     {
         $error = sprintf('Error N: %s, Description: %s', $this->getErrorCode(), $this->getDescription());
-
         if ($return) {
             return $error;
         }
-
         echo $error;
 
         return true;

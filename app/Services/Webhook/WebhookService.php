@@ -63,19 +63,19 @@ class WebhookService
         'deleteMessage',
     ];
     private $client;
-    private $api_key;
+    private $apiKey;
 
     /**
      * Создаем HTTP (Guzzle) клиента
      * WebhookService constructor.
-     * @param string $base_uri
-     * @param string $api_key
+     * @param string $baseUri
+     * @param string $apiKey
      */
-    public function __construct(string $base_uri, string $api_key)
+    public function __construct(string $baseUri, string $apiKey)
     {
-        $this->api_key = $api_key;
+        $this->apiKey = $apiKey;
         $this->client = new Client([
-            'base_uri' => $base_uri
+            'base_uri' => $baseUri
         ]);
     }
 
@@ -84,7 +84,7 @@ class WebhookService
      * @return array|string
      * @throws WebhookException
      */
-    public static function getInput(int $respondent_id = null)
+    public static function getInput(int $respondentId = null)
     {
         $input = file_get_contents('php://input');
         if (!is_string($input)) {
@@ -94,14 +94,14 @@ class WebhookService
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new WebhookException('Input must be converted to json!');
         }
-        if ($respondent_id !== null) {
-            $input_by_respondent_id = [];
+        if ($respondentId !== null) {
+            $inputByRespondentId = [];
             foreach ($input as $key => $val) {
-                if ($val->respondent_id === $respondent_id) {
-                    $input_by_respondent_id[] = $val;
+                if ($val->respondentId === $respondentId) {
+                    $inputByRespondentId[] = $val;
                 }
             }
-            $input = $input_by_respondent_id;
+            $input = $inputByRespondentId;
         }
 
         return $input;
@@ -146,7 +146,7 @@ class WebhookService
 
         try {
             $response = $this->client->post(
-                '/' . $this->api_key . '/' . $action,
+                '/' . $this->apiKey . '/' . $action,
                 $data
             );
             $result = (string)$response->getBody();

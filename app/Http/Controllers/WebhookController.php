@@ -18,18 +18,18 @@ class WebhookController extends Controller
 
         $input = $webhook->getInput($id);
 
-        $respondent_id = Auth::user()->id;
+        $respondentId = Auth::user()->id;
 
         if (!empty($input)) {
 
-            $next_question_id = Answer::get_next_question_id($input->answer_id);
+            $nextQuestionId = Answer::getNextQuestionId($input->answerId);
 
-            return $webhook->sendMessage(['char_id' => $input->respondent_id, 'next_question_id' => $next_question_id]);
+            return $webhook->sendMessage(['char_id' => $respondentId, 'next_question_id' => $nextQuestionId]);
 //          return redirect()->route('webhook-input')->with(['id' => $respondent_id, 'next_question_id' => $next_question_id]);
         } else {
-            $next_question_id = Answer::get_next_question_id();
+            $nextQuestionId = Answer::getNextQuestionId();
 
-            return $webhook->sendMessage(['char_id' => $input->respondent_id, 'next_question_id' => $next_question_id]);
+            return $webhook->sendMessage(['char_id' => $respondentId, 'next_question_id' => $nextQuestionId]);
 //          return redirect()->route('webhook-input')->with(['id' => $respondent_id, 'next_question_id' => $next_question_id]);
         }
     }
